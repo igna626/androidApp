@@ -6,7 +6,7 @@
     <string name="register">Register</string>
     <string name="click_to_login">Click to log in</string>
     <string name="click_to_register">Click to register</string>
-    <string name="logout">Logout</string>
+    <string name="logout">Log out</string>
     <string name="intro_screen">IntroScreen</string>
     <string name="or_sign_in_with">Or sign in with</string>
     <string name="dyel">dyel</string>
