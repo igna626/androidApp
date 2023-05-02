@@ -20,10 +20,39 @@ public class ProfileActivity extends AppCompatActivity {
     FirebaseAuth auth;
     Button logOutButton;
     FirebaseUser user;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        Button dietsButton = findViewById(R.id.button1);
+        dietsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), DietsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button workoutsButton = findViewById(R.id.button2);
+        workoutsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), WorkoutsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button performanceButton = findViewById(R.id.button3);
+        performanceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), PerformanceActivity.class);
+                startActivity(intent);
+            }
+        });
 
         auth = FirebaseAuth.getInstance();
         logOutButton = findViewById(R.id.logout);
