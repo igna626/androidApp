@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +18,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import android.os.Bundle;
 import android.widget.Button;
@@ -34,7 +40,8 @@ public class DietsActivity extends AppCompatActivity {
     private EditText editText2;
     private Button button;
     private FirebaseFirestore firestore;
-    private RecyclerView recyclerView;
+    private CollectionReference userCollectionRef;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +52,10 @@ public class DietsActivity extends AppCompatActivity {
         editText1 = findViewById(R.id.input_nombre_comida);
         editText2 = findViewById(R.id.input_kcal);
         button = findViewById(R.id.add_food);
+
+        // Nuevas lineas
+        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        userCollectionRef = FirebaseFirestore.getInstance().collection("usuarios").document(userID).collection("comidas");
 
         // Initialize Firestore database instance
         firestore = FirebaseFirestore.getInstance();
@@ -61,8 +72,6 @@ public class DietsActivity extends AppCompatActivity {
     }
 
     private void storeDataInFirestore(String input1, String input2) {
-        // Create a new document reference
-        String documentId = firestore.collection("comidas").document().getId();
         Map<String, Object> data = new HashMap<>();
         // Convert current timestamp to date
         Date currentDate = new Date();
@@ -73,15 +82,14 @@ public class DietsActivity extends AppCompatActivity {
         data.put("Kcals", input2);
 
         // Use the document reference to set the data in Firestore
-        firestore.collection("comidas").document(documentId)
-                .set(data)
+        userCollectionRef.add(data)
                 .addOnSuccessListener(aVoid -> {
                     // Data successfully stored in Firestore
-                    // Perform any additional actions or show a success message
+                    Toast.makeText(DietsActivity.this, "Add to DB Successful.", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
                     // Error occurred while storing data in Firestore
-                    // Handle the error appropriately (e.g., show an error message)
+                    Toast.makeText(DietsActivity.this, "ERROR: Add to DB!", Toast.LENGTH_SHORT).show();
                 });
     }
 }
