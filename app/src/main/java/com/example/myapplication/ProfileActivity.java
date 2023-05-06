@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,7 +21,8 @@ public class ProfileActivity extends AppCompatActivity {
     FirebaseAuth auth;
     Button logOutButton;
     FirebaseUser user;
-
+    Button diets
+    ImageView iconoPersona;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

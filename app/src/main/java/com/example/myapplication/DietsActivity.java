@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -42,11 +44,19 @@ public class DietsActivity extends AppCompatActivity {
     private FirebaseFirestore firestore;
     private CollectionReference userCollectionRef;
     private String userID;
+    private ListView listView;
+    private ArrayAdapter<String> adapter;
+    private List<String> foodList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diets);
+
+        listView = findViewById(R.id.listView);
+        foodList = new ArrayList<>();
+        adapter = new ArrayAdapter<>(this, R.layout.list_item, R.id.foodTextView, foodList);
+        listView.setAdapter(adapter);
 
         // Find references to EditText components and button
         editText1 = findViewById(R.id.input_nombre_comida);
@@ -60,6 +70,26 @@ public class DietsActivity extends AppCompatActivity {
         // Initialize Firestore database instance
         firestore = FirebaseFirestore.getInstance();
 
+        // Obtener las comidas del usuario actual desde Firebase
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("usuarios").document(userID).collection("comidas")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            // Obtener los datos de cada comida y agregarlos a la lista
+                            String food = document.getString("Food");
+                            String kcals = document.getString("Kcals");
+                            String time = document.getString("Time");
+
+                            String foodInfo = "Food: " + food + "\nKcals: " + kcals + "\nTime: " + time;
+                            foodList.add(foodInfo);
+                        }
+
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+
         // Set a click listener on the button
         button.setOnClickListener(view -> {
             // Retrieve text from EditText components
@@ -68,6 +98,25 @@ public class DietsActivity extends AppCompatActivity {
 
             // Store data in Firestore and perform other actions
             storeDataInFirestore(input1, input2);
+
+            // Retrieve elements:
+            db.collection("usuarios").document(userID).collection("comidas")
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                // Obtener los datos de cada comida y agregarlos a la lista
+                                String food = document.getString("Food");
+                                String kcals = document.getString("Kcals");
+                                String time = document.getString("Time");
+
+                                String foodInfo = "Food: " + food + "\nKcals: " + kcals + "\nTime: " + time;
+                                foodList.add(foodInfo);
+                            }
+
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
         });
     }
 

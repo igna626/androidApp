@@ -17,6 +17,17 @@
         android:textSize="36sp" />
      !-->
 
+    <ImageView
+        android:id="@+id/icono_persona"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_person_24"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="20dp" />
+
     <TextView
         android:id="@+id/dyel_title"
         android:layout_width="wrap_content"

@@ -67,9 +67,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2.200 kcal"
-        android:textSize="50sp"
+        android:textSize="30sp"
         android:layout_below="@id/recomendation"
-        android:layout_marginTop="10sp"
+        android:layout_marginTop="5sp"
         android:layout_centerHorizontal="true"/>
 
     <TextView
@@ -87,9 +87,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1.500 kcal"
-        android:textSize="50sp"
+        android:textSize="30sp"
         android:layout_below="@id/left_kcals"
-        android:layout_marginTop="10sp"
+        android:layout_marginTop="5sp"
         android:layout_centerHorizontal="true"/>
+
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/actual_kcals"
+        tools:context=".DietsActivity">
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
 
 </RelativeLayout>
