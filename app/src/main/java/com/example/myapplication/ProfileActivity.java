@@ -21,7 +21,7 @@ public class ProfileActivity extends AppCompatActivity {
     FirebaseAuth auth;
     Button logOutButton;
     FirebaseUser user;
-    Button diets
+    Button diets;
     ImageView iconoPersona;
 
     @Override
